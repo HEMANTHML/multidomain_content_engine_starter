@@ -1,11 +1,14 @@
 import json
+import os
+from dotenv import load_dotenv
 from typing import Any, Dict, List, Literal, Optional
 
 from groq import Groq
 from pydantic import BaseModel, Field, ValidationError
 
 MODEL_ID = "openai/gpt-oss-20b"
-client = Groq()  # Reads GROQ_API_KEY from environment
+load_dotenv()
+client = Groq(api_key=os.getenv("GROQ_API_KEY"))  # Reads GROQ_API_KEY from environment
 
 
 class QAResult(BaseModel):

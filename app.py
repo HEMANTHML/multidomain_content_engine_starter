@@ -3,12 +3,12 @@ from typing import Any, Dict, List
 
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
-from dotenv import load_dotenv
+
 
 from agents import run_step, QAResult
 from profiles import load_profiles, get_profile
 
-load_dotenv()
+
 
 app = Flask(__name__)
 CORS(app)
@@ -36,7 +36,7 @@ def domains():
                 "steps": profile.get("step_labels", {}),
             }
             for profile_id, profile in PROFILES.items()
-        }
+        ]
     })
 
 
