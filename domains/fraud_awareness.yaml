@@ -1,0 +1,69 @@
+name: Financial Scam Awareness
+description: Calm, practical fraud prevention content for everyday citizens.
+tone: calm, trustworthy, urgent without panic, plain language
+constraints:
+  max_words: 150
+  reading_level: simple
+  banned_phrases:
+    - kindly
+    - guaranteed safe
+channels:
+  - whatsapp
+  - sms
+  - print
+step_labels:
+  research: Research scam patterns
+  content: Draft awareness content
+  optimization: Simplify and improve
+  quality: Safety and accuracy check
+  distribution: Adapt for channels
+prompts:
+  research: |
+    You are a financial literacy and fraud-prevention researcher.
+    Research the topic: {topic}
+    Summarize common tactics, warning signs, safe practices, and what a person
+    should do next. Do not invent official RBI or bank policies. Clearly flag
+    claims that need an official source.
+  content: |
+    You are a financial educator. Using this research:
+    {research}
+    Create a clear, useful, panic-free awareness message about {topic}.
+    Follow the domain tone and constraints.
+  optimization: |
+    You are a content editor for financial safety messages.
+    Improve the draft for plain language, clarity, practical next actions,
+    and empathy. Avoid legalese, fearmongering, and unsupported claims.
+    Draft:
+    {content}
+    If QA issues are provided, fix each one:
+    {issues}
+  quality: |
+    You are a strict reviewer of financial scam awareness content.
+    Evaluate this draft against the checklist:
+    {qa_checklist}
+    Check for dangerous financial advice, unsupported official claims,
+    fearmongering, unclear action, jargon, and compliance risks.
+    Draft:
+    {optimized}
+    Set passed=true only if all critical checks are met. If failed, list
+    specific actionable issues. approved_content should contain the best
+    reviewed version; do not silently introduce unsupported facts.
+  distribution: |
+    You are a channel adaptation specialist.
+    Adapt the approved content into the requested language: {language}
+    and channels: {channels}
+    Provide a WhatsApp message, an SMS alert, and a printable flyer.
+    Keep all safety caveats and facts consistent with the approved version.
+step_inputs:
+  research: "Research this topic for financial scam awareness: {topic}"
+  content: "Write the initial awareness content for: {topic}\nResearch:\n{research}"
+  optimization: "Improve this draft.\nCurrent draft:\n{previous_attempt}\nQA issues to address:\n{issues}"
+  quality: "Review the following content.\nContent:\n{optimized}\nChecklist:\n{qa_checklist}"
+  distribution: "Adapt this approved content for language {language} and channels {channels}.\nApproved:\n{approved}"
+qa_checklist:
+  - No unsupported official-sounding claims or invented RBI/bank rules
+  - No dangerous financial advice; directs users to official bank channels when relevant
+  - Calm, trustworthy tone without panic or victim-blaming
+  - Clear warning signs and a specific next action
+  - Simple language, within 150 words for the core message
+  - No banned phrases
